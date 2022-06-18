@@ -69,6 +69,6 @@ app.delete('/deleteBuilding', (req, res)=>{
     .catch( err => console.log(err))
 })
  
-app.listen(process.env.PORT || PORT, ()=>{
+app.listen(process.env.PORT || 3000, ()=>{
     console.log('Server is running, you better catch it!')
 })    
