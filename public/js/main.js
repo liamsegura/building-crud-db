@@ -1,6 +1,6 @@
 const deleteBtn = document.querySelectorAll('.del')
-const todoItem = document.querySelectorAll('.todoItem span')
-const todoComplete = document.querySelectorAll('.todoItem span.completed')
+const todoItem = document.querySelectorAll('.building span')
+const todoComplete = document.querySelectorAll('.building span.completed')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -17,7 +17,7 @@ Array.from(todoComplete).forEach((el)=>{
 async function deleteTodo(){
     const todoText = this.parentNode.childNodes[1].innerText
     try{
-        const response = await fetch('deleteTodo', {
+        const response = await fetch('deleteBuilding', {
             method: 'delete',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({

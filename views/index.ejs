@@ -8,24 +8,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Todos</h1>
+    <h1>Buildings</h1>
     <ul>
     <% for(let i = 0; i < zebra.length; i++) { %>
-        <li class='todoItem'>
+        <li class='building'>
             <% if(zebra[i].completed === true) {%>
-            <span class="completed"><%= zebra[i].todo %></span>
+            <span class="completed"><%= zebra[i].building %></span>
             <% }else{ %>
-            <span><%= zebra[i].todo %></span>
+            <span><%= zebra[i].building %></span>
             <% } %>   
             <span class='del'> Delete </span>
         </li>
     <% } %>    
     </ul>
 
-    <h2>Things left to do: <%= left %></h2>
+    <h2>Current buildings: <%= left %></h2>
 
-    <form action="/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
+    <form action="/createBuilding" method='POST'>
+        <input type="text" placeholder="Building Name" name='buildingName'>
+        <input type="text" placeholder="Rooms" name='buildingRooms'>
         <input type="submit">
     </form>
 

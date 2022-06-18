@@ -6,7 +6,7 @@ require('dotenv').config()
 
 let db,
     dbConnectionStr = process.env.DB_STRING,
-    dbName = 'todo'
+    dbName = 'buildings'
 
 MongoClient.connect(dbConnectionStr, {useUnifiedTopology: true})
     .then(client => {
@@ -23,21 +23,21 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.get('/', async (req,res)=>{
-    const todoItems = await db.collection('todos').find().toArray()
-    const itemsLeft = await db.collection('todos').countDocuments({completed: false})
-    res.render('index.ejs', {zebra: todoItems, left: itemsLeft})
+    const buildings = await db.collection('buildings').find().toArray()
+    const buildingsLeft = await db.collection('buildings').countDocuments({completed: false})
+    res.render('index.ejs', {zebra: buildings, left: buildingsLeft})
 })
 
-app.post('/createTodo', (req, res)=>{
-    db.collection('todos').insertOne({todo: req.body.todoItem, completed: false})
+app.post('/createBuilding', (req, res)=>{
+    db.collection('buildings').insertOne({building: req.body.buildingName, rooms: req.body.buildingRooms, completed: false})
     .then(result =>{
-        console.log('Todo has been added!')
+        console.log('Building has been added!')
         res.redirect('/')
     })
 })
 
 app.put('/markComplete', (req, res)=>{
-    db.collection('todos').updateOne({todo: req.body.rainbowUnicorn},{
+    db.collection('buildings').updateOne({building: req.body.rainbowUnicorn},{
         $set: {
             completed: true
         }
@@ -49,7 +49,7 @@ app.put('/markComplete', (req, res)=>{
 })
 
 app.put('/undo', (req, res)=>{
-    db.collection('todos').updateOne({todo: req.body.rainbowUnicorn},{
+    db.collection('buildings').updateOne({building: req.body.rainbowUnicorn},{
         $set: {
             completed: false
         }
@@ -60,10 +60,10 @@ app.put('/undo', (req, res)=>{
     })
 })
 
-app.delete('/deleteTodo', (req, res)=>{
-    db.collection('todos').deleteOne({todo:req.body.rainbowUnicorn})
+app.delete('/deleteBuilding', (req, res)=>{
+    db.collection('buildings').deleteOne({building: req.body.rainbowUnicorn})
     .then(result =>{
-        console.log('Deleted Todo')
+        console.log('Deleted Building')
         res.json('Deleted It')
     })
     .catch( err => console.log(err))
